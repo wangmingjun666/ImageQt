@@ -42,7 +42,7 @@
      <x>0</x>
      <y>0</y>
      <width>1196</width>
-     <height>26</height>
+     <height>36</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -64,6 +64,8 @@
     <addaction name="actionHistogram"/>
     <addaction name="actionGrayscale"/>
     <addaction name="actionAdjust_brightness"/>
+    <addaction name="separator"/>
+    <addaction name="actionHistogramEqualization"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -481,6 +483,46 @@
   <action name="actionRotate">
    <property name="text">
     <string>旋转</string>
+   </property>
+  </action>
+  <action name="actionHistogramEqualization">
+   <property name="icon">
+    <iconset>
+     <normalon>:/img/histogram.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>直方图均衡</string>
+   </property>
+  </action>
+  <action name="actionGoback">
+   <property name="icon">
+    <iconset resource="../res/default.qrc">
+     <normaloff>:/img/edit-redo-rtl.png</normaloff>:/img/edit-redo-rtl.png</iconset>
+   </property>
+   <property name="text">
+    <string>Goback</string>
+   </property>
+   <property name="toolTip">
+    <string>后退</string>
+   </property>
+  </action>
+  <action name="actionGoForward">
+   <property name="icon">
+    <iconset resource="../res/default.qrc">
+     <normaloff>:/img/edit-redo.png</normaloff>:/img/edit-redo.png</iconset>
+   </property>
+   <property name="text">
+    <string>前进</string>
+   </property>
+  </action>
+  <action name="actionLookBack">
+   <property name="icon">
+    <iconset resource="../res/default.qrc">
+     <normaloff>:/img/horizontal.png</normaloff>:/img/horizontal.png</iconset>
+   </property>
+   <property name="text">
+    <string>回看</string>
    </property>
   </action>
  </widget>

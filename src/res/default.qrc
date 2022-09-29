@@ -28,6 +28,8 @@
         <file>open.svg</file>
         <file>clear.svg</file>
         <file>about.svg</file>
+        <file>edit-redo.png</file>
+        <file>edit-redo-rtl.png</file>
     </qresource>
     <qresource prefix="/language">
         <file>cn.qm</file>

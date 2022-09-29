@@ -135,16 +135,22 @@ private slots:
 
     void on_actionRotate_triggered();
 
+    void on_actionHistogramEqualization_triggered();
+
+    void on_actionGoback_triggered();
+
+    void on_actionGoForward_triggered();
 private:
     QAction *finalEx;
 
-    Ui::MainWindow  *ui;
-    QGraphicsScene  *leftScene;
-    QGraphicsScene  *rightScene;
-    QGraphicsPixmapItem* leftPixmapItem;
-    QGraphicsPixmapItem* rightPixmapItem;
-
-    QLabel          *size;
+    Ui::MainWindow *ui;
+    QGraphicsScene *leftScene;
+    QGraphicsScene *rightScene;
+    QGraphicsPixmapItem *leftPixmapItem;
+    QGraphicsPixmapItem *rightPixmapItem;
+    QStack<QPixmap> currentStackPixmap;
+    QStack<QPixmap> oldStackPixmap;
+    QLabel *size;
 
     QFileInfo *info;
 

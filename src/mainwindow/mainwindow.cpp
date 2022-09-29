@@ -46,6 +46,9 @@ void MainWindow::createToolBar()
     ui->toolBar->addAction(ui->actionHistogram);
 
     ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->actionGoback);
+    ui->toolBar->addAction(ui->actionGoForward);
+    ui->toolBar->addAction(ui->actionLookBack);
 }
 
 void MainWindow::createAction()
@@ -86,6 +89,8 @@ MainWindow::~MainWindow()
  *****************************************************************************/
 void MainWindow::updateRightImage(QPixmap &pixmap)
 {
+    currentStackPixmap.push(rightPixmapItem->pixmap());
+    oldStackPixmap.clear();
     rightPixmapItem->setPixmap(pixmap);
     rightScene->setSceneRect(QRectF(pixmap.rect()));
 }
@@ -155,7 +160,11 @@ void MainWindow::setActionStatus(bool status)
     ui->actionVertical->setEnabled(status);
     ui->actionClassic_frame->setEnabled(status);
     ui->actionAdjust_brightness->setEnabled(status);
+    ui->actionHistogramEqualization->setEnabled(status);
     ui->zoomAction->setEnabled(status);
+    ui->actionGoback->setEnabled(status);
+    ui->actionGoForward->setEnabled(status);
+    ui->actionLookBack->setEnabled(status);
 }
 
 
@@ -1008,11 +1017,9 @@ void MainWindow::on_actionThinning_triggered()
 void MainWindow::on_actionRotate_triggered()
 {
     bool ok;
-    int factor = QInputDialog::getInt(this, tr("旋转"), "请输入要旋转的角度（正数向右，负数向左）",0,-360,360,10,&ok);
-    if (ok)
-    {
-        if (factor != 0)
-        {
+    int factor = QInputDialog::getInt(this, tr("旋转"), "请输入要旋转的角度（正数向右，负数向左）", 0, -360, 360, 10, &ok);
+    if (ok) {
+        if (factor != 0) {
             QPixmap rightImage = rightPixmapItem->pixmap();
 
             QImage *imgRotate = new QImage;
@@ -1022,10 +1029,39 @@ void MainWindow::on_actionRotate_triggered()
             QPixmap newPixmap;
             newPixmap = QPixmap::fromImage(*imgRotate);
             updateRightImage(newPixmap);
-        }
-        else
-        {
+        } else {
             return;
         }
     }
+}
+
+void MainWindow::on_actionHistogramEqualization_triggered()
+{
+    QPixmap rightImage = rightPixmapItem->pixmap();
+    QImage binaryImage = Tools::HistogramEqualization(rightImage.toImage());
+    rightImage.convertFromImage(binaryImage);
+
+    updateRightImage(rightImage);
+}
+
+void MainWindow::on_actionGoback_triggered()
+{
+    if (currentStackPixmap.isEmpty())
+        return;
+
+    oldStackPixmap.push(rightPixmapItem->pixmap());
+    QPixmap pix = currentStackPixmap.pop();
+    rightPixmapItem->setPixmap(pix);
+    rightScene->setSceneRect(QRectF(pix.rect()));
+}
+
+void MainWindow::on_actionGoForward_triggered()
+{
+    if (oldStackPixmap.isEmpty())
+        return;
+    currentStackPixmap.push(rightPixmapItem->pixmap());
+    QPixmap pix = oldStackPixmap.pop();
+    rightPixmapItem->setPixmap(pix);
+    rightScene->setSceneRect(QRectF(pix.rect()));
+}
 }
