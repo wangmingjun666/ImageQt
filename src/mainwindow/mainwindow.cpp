@@ -983,4 +983,3 @@ void MainWindow::on_actionGoForward_triggered()
     rightPixmapItem->setPixmap(pix);
     rightScene->setSceneRect(QRectF(pix.rect()));
 }
-}
