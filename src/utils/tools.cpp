@@ -971,7 +971,36 @@ QImage Tools::Final(const QImage &origin)
     }
 
 
+QImage Tools::HistogramEqualization(const QImage &origin)
+{
+    QImage newImg = QImage(origin.width(), origin.height(), QImage::Format_RGB888);
 
+    int count[256] = {0};
+    int width = origin.width();
+    int height = origin.height();
+    int sum = 0; //记录像素的总个数
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            QColor oldColor = origin.pixel(x, y);
+            int _x = (oldColor.red() * 299 + oldColor.green() * 587 + oldColor.blue() * 114 + 500) / 1000;
+            count[_x]++;
+            sum++;
+        }
+    }
+    int temp = 0;
+    for (int i = 0; i < 256; i++) {
+        temp = temp + count[i]; // 累计求当前点之前出现的次数
+        count[i] = temp * 255 / sum;
+    }
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            QColor oldColor = origin.pixel(x, y);
+            int _x = (oldColor.red() * 299 + oldColor.green() * 587 + oldColor.blue() * 114 + 500) / 1000;
+
+            _x = qBound(0, _x, 255);
+            newImg.setPixel(x, y, qRgb(count[_x], count[_x], count[_x]));
+        }
+    }
 
     return newImg;
 }
