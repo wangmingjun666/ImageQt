@@ -409,7 +409,6 @@ QImage Tools::MeidaFilter(const QImage &origin, int filterRadius)
     QImage destImage((uchar *)resImageBits, imageWidth, imageHeight, origin.format());
     //    QPixmap pixRes;
     //    pixRes.convertFromImage(destImage);
-    delete[] resImageBits;
     return destImage;
 }
 
