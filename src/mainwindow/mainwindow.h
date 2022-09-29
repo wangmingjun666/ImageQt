@@ -24,13 +24,13 @@
 #include "../dialog/dialog_two_threshold_transform.h"
 #include "../dialog/dialog_stretch_transform.h"
 
-#define WINDOW_TITLE    "ImageQt"
+#define WINDOW_TITLE "ImageQt"
 #define WINDOW_CRITICAL "Error - ImageQt"
-#define WINDOW_WARNING  "Notice - ImageQt"
-#define WINDOW_ABOUT    "About - ImageQt"
+#define WINDOW_WARNING "Notice - ImageQt"
+#define WINDOW_ABOUT "About - ImageQt"
 
 namespace Ui {
-    class MainWindow;
+class MainWindow;
 }
 
 class MainWindow : public QMainWindow
@@ -57,19 +57,19 @@ private slots:
     void receiveLogGreyParamter(double, double);
     void receiveExpGreyParamter(double, double, double);
     void receiveTwoThresholdParamter(int, int, int);
-    void receiveStretchParamter(int, int, double,double,double,double,double);
+    void receiveStretchParamter(int, int, double, double, double, double, double);
 
     // On action triggered
     void on_actionOpen_triggered();
-    void on_actionClose_triggered();        // Clear both left and right Scene
+    void on_actionClose_triggered(); // Clear both left and right Scene
     void on_actionSave_triggered();
-    void on_actionSave_As_triggered();      // Save as
-    void on_actionExit_triggered();         // Exit the program
+    void on_actionSave_As_triggered(); // Save as
+    void on_actionExit_triggered(); // Exit the program
 
-    void on_actionGrayscale_triggered();    // Grayscale
+    void on_actionGrayscale_triggered(); // Grayscale
     void on_actionAdjust_brightness_triggered();
 
-    void on_actionRestore_triggered();      // Restore to the original image
+    void on_actionRestore_triggered(); // Restore to the original image
     void on_actionHistogram_triggered();
 
     void on_actionMovie_frame_triggered();
@@ -83,7 +83,7 @@ private slots:
     void on_actionGauss_triggered();
     void on_actionMeida_Filter_triggered();
 
-    void on_zoomAction_triggered();         // Zoom action with dialog
+    void on_zoomAction_triggered(); // Zoom action with dialog
     void on_actionHorizontal_triggered();
     void on_actionVertical_triggered();
 
@@ -94,17 +94,16 @@ private slots:
     void on_actionTwo_thresholds_transform_triggered();
     void on_actionStretch_transformation_triggered();
 
-    void on_actionAdjust_triggered();       // Adjust to fit the window size
-    void on_actionNormal_triggered();       // Restore the right image to original size
+    void on_actionAdjust_triggered(); // Adjust to fit the window size
+    void on_actionNormal_triggered(); // Restore the right image to original size
 
+    void on_actionAbout_triggered(); // Show "About" dialog
 
-    void on_actionAbout_triggered();        // Show "About" dialog
-
-//    void on_actionT_triggered();
+    //    void on_actionT_triggered();
 
     void on_actionLaplace_triggered();
 
-//    void on_actionEdge_Detection_triggered();
+    //    void on_actionEdge_Detection_triggered();
 
     void on_actionSobel_triggered();
 
@@ -118,7 +117,6 @@ private slots:
 
     void on_actionCircumference_triggered();
 
-
     void on_actionDilate_triggered();
 
     void on_actionExpansion_triggered();
@@ -129,9 +127,9 @@ private slots:
 
     void on_actionThinning_triggered();
 
-//    void on_actionRGB2HSV_triggered();
-//    void on_actionRGB2HSL_triggered();
-//    void on_actionRGB2Cmyk_triggered();
+    //    void on_actionRGB2HSV_triggered();
+    //    void on_actionRGB2HSL_triggered();
+    //    void on_actionRGB2Cmyk_triggered();
 
     void on_actionRotate_triggered();
 

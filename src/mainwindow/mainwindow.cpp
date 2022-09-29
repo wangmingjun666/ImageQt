@@ -3,12 +3,11 @@
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
 
     leftScene = new QGraphicsScene;
     rightScene = new QGraphicsScene;
@@ -20,17 +19,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     info = nullptr;
 
-    leftScene->setBackgroundBrush(QColor::fromRgb(224,224,224));
+    leftScene->setBackgroundBrush(QColor::fromRgb(224, 224, 224));
     ui->leftGraphicsView->setScene(leftScene);
-    rightScene->setBackgroundBrush(QColor::fromRgb(224,224,224));
+    rightScene->setBackgroundBrush(QColor::fromRgb(224, 224, 224));
     ui->rightGraphicsView->setScene(rightScene);
 
     ui->statusBar->addPermanentWidget(size);
 
-
     createAction();
     createToolBar();
-
 
     setActionStatus(false);
     setWindowTitle("ImageQt");
@@ -53,35 +50,27 @@ void MainWindow::createToolBar()
 
 void MainWindow::createAction()
 {
-
 }
-
-
 
 MainWindow::~MainWindow()
 {
     delete ui;
 
-    if (leftScene)
-    {
+    if (leftScene) {
         delete leftScene;
         leftScene = nullptr;
     }
 
-    if (size)
-    {
+    if (size) {
         delete size;
         size = nullptr;
     }
 
-
     //add
-    if (rightScene)
-    {
+    if (rightScene) {
         delete leftScene;
         leftScene = nullptr;
     }
-
 }
 
 /******************************************************************************
@@ -107,15 +96,11 @@ void MainWindow::cleanImage()
     rightScene->clear();
     ui->rightGraphicsView->resetTransform();
 
-
-    if (size)
-    {
+    if (size) {
         delete size;
         size = new QLabel;
         ui->statusBar->addPermanentWidget(size);
     }
-
-
 
     this->setWindowTitle(WINDOW_TITLE);
     setActionStatus(false);
@@ -166,9 +151,6 @@ void MainWindow::setActionStatus(bool status)
     ui->actionGoForward->setEnabled(status);
     ui->actionLookBack->setEnabled(status);
 }
-
-
-
 
 void MainWindow::receiveGaussianFactor(int radius, double sigma)
 {
@@ -258,14 +240,11 @@ void MainWindow::receiveStretchParamter(int x1, int x2,
                                         double b2, double b3)
 {
     QPixmap rightImage = rightPixmapItem->pixmap();
-    QImage newImage = Tools::StretchTransform(rightImage.toImage(),x1,x2,k1,k2,k3,b2,b3);
+    QImage newImage = Tools::StretchTransform(rightImage.toImage(), x1, x2, k1, k2, k3, b2, b3);
     rightImage.convertFromImage(newImage);
 
     updateRightImage(rightImage);
 }
-
-
-
 
 /******************************************************************************
  *                      Open a image file and show it
@@ -275,22 +254,21 @@ void MainWindow::receiveStretchParamter(int x1, int x2,
  *****************************************************************************/
 void MainWindow::on_actionOpen_triggered()
 {
-        // Automatically detects the current user's home directory
-        // And then wait the user to select one image
-        QString imagePath = QFileDialog::getOpenFileName(this, tr("Open image"), getUserPath() + "/Pictures",
-                                                 tr("All Files (*);;"
-                                                    "All Images (*.bpm *.gif *.jpg *.jpeg *.png *.ppm *.xbm *.xpm);;"
-                                                    "Image BPM (*.bpm);;"
-                                                    "Image GIF (*.gif);;"
-                                                    "Image JPG (*.jpg);;"
-                                                    "Image JPEG (*.jpeg);;"
-                                                    "Image PNG (*.png);;"
-                                                    "Image PPM (*.ppm);;"
-                                                    "Image XBM (*.xbm);;"
-                                                    "Image XPM (*.xpm);;"));
+    // Automatically detects the current user's home directory
+    // And then wait the user to select one image
+    QString imagePath = QFileDialog::getOpenFileName(this, tr("Open image"), getUserPath() + "/Pictures",
+                                                     tr("All Files (*);;"
+                                                        "All Images (*.bpm *.gif *.jpg *.jpeg *.png *.ppm *.xbm *.xpm);;"
+                                                        "Image BPM (*.bpm);;"
+                                                        "Image GIF (*.gif);;"
+                                                        "Image JPG (*.jpg);;"
+                                                        "Image JPEG (*.jpeg);;"
+                                                        "Image PNG (*.png);;"
+                                                        "Image PPM (*.ppm);;"
+                                                        "Image XBM (*.xbm);;"
+                                                        "Image XPM (*.xpm);;"));
 
-    if (!imagePath.isEmpty())
-    {
+    if (!imagePath.isEmpty()) {
         QFile file(imagePath);
         if (!file.open(QIODevice::ReadOnly)) {
             QMessageBox::critical(this, tr(WINDOW_CRITICAL),
@@ -333,7 +311,6 @@ void MainWindow::on_actionClose_triggered()
 
 void MainWindow::on_actionSave_triggered()
 {
-
 }
 
 /******************************************************************************
@@ -341,20 +318,18 @@ void MainWindow::on_actionSave_triggered()
  *****************************************************************************/
 void MainWindow::on_actionSave_As_triggered()
 {
-
     QString newPath = QFileDialog::getSaveFileName(this, tr("Save image"), QString(),
-            tr("All files (*);;"
-               "Image BPM (*.bpm);;"
-               "Image GIF (*.gif);;"
-               "Image JPG (*.jpg);;"
-               "Image JPEG (*.jpeg);;"
-               "Image PNG (*.png);;"
-               "Image PPM (*.ppm);;"
-               "Image XBM (*.xbm);;"
-               "Image XPM (*.xpm);;"));
+                                                   tr("All files (*);;"
+                                                      "Image BPM (*.bpm);;"
+                                                      "Image GIF (*.gif);;"
+                                                      "Image JPG (*.jpg);;"
+                                                      "Image JPEG (*.jpeg);;"
+                                                      "Image PNG (*.png);;"
+                                                      "Image PPM (*.ppm);;"
+                                                      "Image XBM (*.xbm);;"
+                                                      "Image XPM (*.xpm);;"));
 
     if (!newPath.isEmpty()) {
-
         QFile file(newPath);
         if (!file.open(QIODevice::WriteOnly)) {
             QMessageBox::critical(this, tr(WINDOW_CRITICAL), tr("Unable to save image."));
@@ -363,7 +338,7 @@ void MainWindow::on_actionSave_As_triggered()
 
         //Save image to new path
         rightPixmapItem->pixmap().save(newPath);
-//        rightImage->save(newPath);
+        //        rightImage->save(newPath);
     }
 }
 
@@ -375,9 +350,6 @@ void MainWindow::on_actionExit_triggered()
 {
     qApp->quit();
 }
-
-
-
 
 /******************************************************************************
  *                              Greyscale
@@ -391,8 +363,6 @@ void MainWindow::on_actionGrayscale_triggered()
     updateRightImage(rightImage);
 }
 
-
-
 /******************************************************************************
  *                  Adjust the image size to fit the window
  *
@@ -404,31 +374,28 @@ void MainWindow::on_actionAdjust_triggered()
     int width = leftPixmapItem->pixmap().width();
     int max_height = ui->leftGraphicsView->height();
     int max_width = ui->leftGraphicsView->width();
-    int size,max_size,fact=0;
-    double val=0;
+    int size, max_size, fact = 0;
+    double val = 0;
 
-
-    size = qMin(width,height);
-    max_size = qMin(max_width,max_height);
-
+    size = qMin(width, height);
+    max_size = qMin(max_width, max_height);
 
     if (size < max_size) {
-        while ((size*val) < max_size)
-            val = pow(1.2,fact++);
-        val = pow(1.2,fact-2);
-        ui->leftGraphicsView->setFactor(fact-2);
+        while ((size * val) < max_size)
+            val = pow(1.2, fact++);
+        val = pow(1.2, fact - 2);
+        ui->leftGraphicsView->setFactor(fact - 2);
     }
 
     else {
         val = 1;
-        while ((size*val) > max_size)
-            val = pow(1.2,fact--);
-        val = pow(1.2,fact+1);
-        ui->leftGraphicsView->setFactor(fact+1);
+        while ((size * val) > max_size)
+            val = pow(1.2, fact--);
+        val = pow(1.2, fact + 1);
+        ui->leftGraphicsView->setFactor(fact + 1);
     }
 
-    ui->leftGraphicsView->scale(val,val);
-
+    ui->leftGraphicsView->scale(val, val);
 
     // right
     height = leftPixmapItem->pixmap().height();
@@ -436,35 +403,28 @@ void MainWindow::on_actionAdjust_triggered()
     max_height = ui->rightGraphicsView->height();
     max_width = ui->rightGraphicsView->width();
     size = max_size = fact = 0;
-    val=0;
+    val = 0;
 
-
-    size = qMin(width,height);
-    max_size = qMin(max_width,max_height);
-
+    size = qMin(width, height);
+    max_size = qMin(max_width, max_height);
 
     if (size < max_size) {
-        while ((size*val) < max_size)
-            val = pow(1.2,fact++);
-        val = pow(1.2,fact-2);
-        ui->rightGraphicsView->setFactor(fact-2);
+        while ((size * val) < max_size)
+            val = pow(1.2, fact++);
+        val = pow(1.2, fact - 2);
+        ui->rightGraphicsView->setFactor(fact - 2);
     }
 
     else {
         val = 1;
-        while ((size*val) > max_size)
-            val = pow(1.2,fact--);
-        val = pow(1.2,fact+1);
-        ui->rightGraphicsView->setFactor(fact+1);
+        while ((size * val) > max_size)
+            val = pow(1.2, fact--);
+        val = pow(1.2, fact + 1);
+        ui->rightGraphicsView->setFactor(fact + 1);
     }
 
-    ui->rightGraphicsView->scale(val,val);
-
-
+    ui->rightGraphicsView->scale(val, val);
 }
-
-
-
 
 /******************************************************************************
  *                   Restore the image, both size and rotate
@@ -472,7 +432,6 @@ void MainWindow::on_actionAdjust_triggered()
 void MainWindow::on_actionRestore_triggered()
 {
     on_actionNormal_triggered();
-
 }
 
 /******************************************************************************
@@ -480,19 +439,17 @@ void MainWindow::on_actionRestore_triggered()
  *****************************************************************************/
 void MainWindow::on_actionHistogram_triggered()
 {
-
-    QDialog * hstgrmDialog = new QDialog(this);
-    QScrollArea * scrollArea = new QScrollArea(hstgrmDialog);
-    Histogram * hstgrm = new Histogram(scrollArea);
+    QDialog *hstgrmDialog = new QDialog(this);
+    QScrollArea *scrollArea = new QScrollArea(hstgrmDialog);
+    Histogram *hstgrm = new Histogram(scrollArea);
     hstgrm->computeHstgrm(rightPixmapItem->pixmap().toImage());
 
     if (hstgrm == nullptr)
         return;
 
-
     scrollArea->setWidget(hstgrm);
 
-    QHBoxLayout * layout = new QHBoxLayout;
+    QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(scrollArea);
     hstgrmDialog->setLayout(layout);
 
@@ -505,7 +462,6 @@ void MainWindow::on_actionHistogram_triggered()
 
     hstgrmDialog->show();
 }
-
 
 /******************************************************************************
  *                              Add frame
@@ -576,9 +532,6 @@ void MainWindow::on_actionWarm_triggered()
     updateRightImage(rightImage);
 }
 
-
-
-
 /******************************************************************************
  *                             简单平滑
  *****************************************************************************/
@@ -609,9 +562,8 @@ void MainWindow::on_actionGauss_triggered()
 void MainWindow::on_actionMeida_Filter_triggered()
 {
     bool ok;
-    int value = QInputDialog::getInt(this, tr("Media Filter"), "Input a value for radius(1~30)",3,1,30,1,&ok);
-    if (ok)
-    {
+    int value = QInputDialog::getInt(this, tr("Media Filter"), "Input a value for radius(1~30)", 3, 1, 30, 1, &ok);
+    if (ok) {
         QPixmap rightImage = rightPixmapItem->pixmap();
         QImage newImage = Tools::MeidaFilter(rightImage.toImage(), value);
         rightImage.convertFromImage(newImage);
@@ -620,34 +572,27 @@ void MainWindow::on_actionMeida_Filter_triggered()
     }
 }
 
-
 /******************************************************************************
  *                     on Action tools->zoom triggered
  *****************************************************************************/
 void MainWindow::on_zoomAction_triggered()
 {
-
     bool ok;
-    int factor = QInputDialog::getInt(this, tr("Zoom"), "Input a value for zoom ratio(%)",100,10,1000,10,&ok);
-    if (ok)
-    {
-        if (factor != 100)
-        {
+    int factor = QInputDialog::getInt(this, tr("Zoom"), "Input a value for zoom ratio(%)", 100, 10, 1000, 10, &ok);
+    if (ok) {
+        if (factor != 100) {
             QPixmap rightImage = rightPixmapItem->pixmap();
 
             int cur_width = rightImage.width();
             int cur_height = rightImage.height();
 
-            QPixmap newPixmap = rightImage.scaled(cur_width*factor/100, cur_height*factor/100);
+            QPixmap newPixmap = rightImage.scaled(cur_width * factor / 100, cur_height * factor / 100);
 
             updateRightImage(newPixmap);
-        }
-        else
-        {
+        } else {
             return;
         }
     }
-
 }
 
 /******************************************************************************
@@ -674,9 +619,6 @@ void MainWindow::on_actionVertical_triggered()
     updateRightImage(rightImage);
 }
 
-
-
-
 /******************************************************************************
  *                           灰度线性变换 y = ax + b
  *****************************************************************************/
@@ -684,7 +626,7 @@ void MainWindow::on_actionLinear_level_transformation_triggered()
 {
     LinearGrayDialog dialog;
     connect(&dialog, SIGNAL(sendData(double, double)),
-            this, SLOT(receiveLinearGreyParameter(double,double)));
+            this, SLOT(receiveLinearGreyParameter(double, double)));
     dialog.exec();
 }
 
@@ -695,7 +637,7 @@ void MainWindow::on_actionPower_transformation_triggered()
 {
     DialogPowerGrey dialog;
     connect(&dialog, SIGNAL(sendData(double, double, double)),
-            this, SLOT(receivePowerGreyParamter(double,double,double)));
+            this, SLOT(receivePowerGreyParamter(double, double, double)));
     dialog.exec();
 }
 
@@ -706,7 +648,7 @@ void MainWindow::on_actionLogarithm_grey_level_transformation_triggered()
 {
     DialogLogGrey dialog;
     connect(&dialog, SIGNAL(sendData(double, double)),
-            this, SLOT(receiveLogGreyParamter(double,double)));
+            this, SLOT(receiveLogGreyParamter(double, double)));
     dialog.exec();
 }
 
@@ -717,7 +659,7 @@ void MainWindow::on_actionExp_transfrom_triggered()
 {
     DialogExpTransform dialog;
     connect(&dialog, SIGNAL(sendData(double, double, double)),
-            this, SLOT(receiveExpGreyParamter(double,double,double)));
+            this, SLOT(receiveExpGreyParamter(double, double, double)));
     dialog.exec();
 }
 
@@ -728,7 +670,7 @@ void MainWindow::on_actionTwo_thresholds_transform_triggered()
 {
     DialogThresholdTransform dialog;
     connect(&dialog, SIGNAL(sendData(int, int, int)),
-            this, SLOT(receiveTwoThresholdParamter(int,int,int)));
+            this, SLOT(receiveTwoThresholdParamter(int, int, int)));
     dialog.exec();
 }
 
@@ -738,8 +680,8 @@ void MainWindow::on_actionTwo_thresholds_transform_triggered()
 void MainWindow::on_actionStretch_transformation_triggered()
 {
     DialogStretchTransform dialog;
-    connect(&dialog, SIGNAL(sendData(int,int,double,double,double,double,double)),
-            this, SLOT(receiveStretchParamter(int,int,double,double,double,double,double)));
+    connect(&dialog, SIGNAL(sendData(int, int, double, double, double, double, double)),
+            this, SLOT(receiveStretchParamter(int, int, double, double, double, double, double)));
     dialog.exec();
 }
 
@@ -764,7 +706,6 @@ void MainWindow::on_actionSobel_triggered()
     updateRightImage(rightImage);
 }
 
-
 void MainWindow::on_actionBinaryzation_triggered()
 {
     QPixmap rightImage = rightPixmapItem->pixmap();
@@ -773,8 +714,6 @@ void MainWindow::on_actionBinaryzation_triggered()
 
     updateRightImage(rightImage);
 }
-
-
 
 /******************************************************************************
  *                          调整亮度
@@ -785,26 +724,20 @@ void MainWindow::on_actionAdjust_brightness_triggered()
     int delta = QInputDialog::getInt(this,
                                      tr("Brightness"),
                                      "Input a value for brightness(+/-)",
-                                     0,-1000,1000,10,&ok);
-    if (ok)
-    {
-        if (delta != 100)
-        {
+                                     0, -1000, 1000, 10, &ok);
+    if (ok) {
+        if (delta != 100) {
             QPixmap rightImage = rightPixmapItem->pixmap();
 
             QImage newImage = Tools::Brightness(delta, rightImage.toImage());
             rightImage.convertFromImage(newImage);
 
             updateRightImage(rightImage);
-        }
-        else
-        {
+        } else {
             return;
         }
     }
-
 }
-
 
 /******************************************************************************
  *                              To do
@@ -812,12 +745,9 @@ void MainWindow::on_actionAdjust_brightness_triggered()
 void MainWindow::on_actionNormal_triggered()
 {
     QPixmap leftImage = leftPixmapItem->pixmap();
-   updateRightImage(leftImage);
-   ui->rightGraphicsView->resetTransform();
+    updateRightImage(leftImage);
+    ui->rightGraphicsView->resetTransform();
 }
-
-
-
 
 /******************************************************************************
  *                              “关于”窗口
@@ -829,7 +759,6 @@ void MainWindow::on_actionAbout_triggered()
     message.setIconPixmap(QPixmap(":/img/logo_1.png"));
     message.exec();
 }
-
 
 /******************************************************************************
  *                           获得当前用户的用户名
@@ -872,7 +801,6 @@ void MainWindow::on_actionPrewitt_triggered()
     updateRightImage(rightImage);
 }
 
-
 /******************************************************************************
  *                              轮廓提取法
  *****************************************************************************/
@@ -891,19 +819,16 @@ void MainWindow::on_actionArea_triggered()
     QImage newImg = rightImage.toImage();
     QImage binImg = Tools::Binaryzation(newImg);
     int area = 0;
-    for(int x=0; x<binImg.width(); x++)
-    {
-        for(int y=0; y<binImg.height(); y++)
-        {
-            if (QColor(binImg.pixel(x,y)).red() == 0)
-                area ++;
+    for (int x = 0; x < binImg.width(); x++) {
+        for (int y = 0; y < binImg.height(); y++) {
+            if (QColor(binImg.pixel(x, y)).red() == 0)
+                area++;
         }
     }
 
-    QMessageBox *message =new QMessageBox(QMessageBox::NoIcon,QObject::tr("面积计算"),"连通区域的面积为："+QString::number(area));
+    QMessageBox *message = new QMessageBox(QMessageBox::NoIcon, QObject::tr("面积计算"), "连通区域的面积为：" + QString::number(area));
     message->show();
 }
-
 
 void MainWindow::on_actionCircumference_triggered()
 {
@@ -912,19 +837,15 @@ void MainWindow::on_actionCircumference_triggered()
     QImage sobelImg = Tools::SobelEdge(newImg);
     sobelImg = Tools::Binaryzation(sobelImg);
     int c = 0;
-    for(int x=0; x<sobelImg.width(); x++)
-    {
-        for(int y=0; y<sobelImg.height(); y++)
-        {
-            if (QColor(sobelImg.pixel(x,y)).red() == 0)
-                c ++;
+    for (int x = 0; x < sobelImg.width(); x++) {
+        for (int y = 0; y < sobelImg.height(); y++) {
+            if (QColor(sobelImg.pixel(x, y)).red() == 0)
+                c++;
         }
     }
-    QMessageBox *message =new QMessageBox(QMessageBox::NoIcon,QObject::tr("周长计算"),"连通区域的周长为："+QString::number(c));
+    QMessageBox *message = new QMessageBox(QMessageBox::NoIcon, QObject::tr("周长计算"), "连通区域的周长为：" + QString::number(c));
     message->show();
 }
-
-
 
 void MainWindow::on_actionDilate_triggered()
 {
@@ -959,7 +880,6 @@ void MainWindow::on_actionOpening_triggered()
     updateRightImage(rightImage);
 }
 
-
 /*****************************************************************************
  *                                 闭运算
  * **************************************************************************/
@@ -978,14 +898,13 @@ void MainWindow::on_actionClosing_triggered()
  * **************************************************************************/
 void MainWindow::on_actionThinning_triggered()
 {
-//    QPixmap rightImage = rightPixmapItem->pixmap();
-//    QImage newImage = Tools::Thinning(rightImage.toImage());
-//    rightImage.convertFromImage(newImage);
+    //    QPixmap rightImage = rightPixmapItem->pixmap();
+    //    QImage newImage = Tools::Thinning(rightImage.toImage());
+    //    rightImage.convertFromImage(newImage);
 
-//    updateRightImage(rightImage);
+    //    updateRightImage(rightImage);
     qDebug() << "TODO";
 }
-
 
 //void MainWindow::on_actionRGB2HSV_triggered()
 //{
