@@ -1,14 +1,14 @@
 #include "dialog_log_grey.h"
 #include "ui_dialog_log_grey.h"
 
-DialogLogGrey::DialogLogGrey(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::DialogLogGrey)
+DialogLogGrey::DialogLogGrey(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::DialogLogGrey)
 {
     ui->setupUi(this);
 
     QPixmap pixmap;
-    pixmap.load(":/img/src/log.png");
+    pixmap.load(":/img/log.png");
 
     ui->funLabel->setPixmap(pixmap);
     setWindowTitle(tr("Grey Level Logarithm Transformation"));
@@ -34,10 +34,9 @@ void DialogLogGrey::paintFunctionImage(double __a, double __b)
 {
     // generate some data:
     QVector<double> x(1001), y(1001); // initialize with entries 0..100
-    for (int i=0; i<1001; ++i)
-    {
-      x[i] = i/50.0; // x goes from 0 to 20
-      y[i] = qLn(__b + x[i])/qLn(__a);
+    for (int i = 0; i < 1001; ++i) {
+        x[i] = i / 50.0; // x goes from 0 to 20
+        y[i] = qLn(__b + x[i]) / qLn(__a);
     }
     // create graph and assign data to it:
     ui->customPlot->addGraph();
