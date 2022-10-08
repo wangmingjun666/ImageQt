@@ -141,6 +141,8 @@ private slots:
     void on_actionGoForward_triggered();
     void on_actionMove_triggered();
 
+    void on_actionTranspose_triggered();
+
 private:
     QAction *finalEx;
 

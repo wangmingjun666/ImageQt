@@ -50,6 +50,7 @@ QImage Thinning(const QImage &origin);
 //QImage RGB2CMYK(const QImage &origin);
 QImage Final(const QImage &origin);
 QImage HistogramEqualization(const QImage &origin);
+QImage Transpose(const QImage &origin);
 } // namespace Tools
 
 #endif // TOOLS_H

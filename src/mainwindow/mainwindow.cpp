@@ -1003,3 +1003,12 @@ void MainWindow::on_actionMove_triggered()
             SLOT(receiveTranslationTransformation(int, int)));
     dialog.exec();
 }
+
+void MainWindow::on_actionTranspose_triggered()
+{
+    QPixmap rightImage = rightPixmapItem->pixmap();
+    QImage binaryImage = Tools::Transpose(rightImage.toImage());
+    rightImage.convertFromImage(binaryImage);
+
+    updateRightImage(rightImage);
+}

@@ -102,6 +102,7 @@
     <addaction name="actionRotate"/>
     <addaction name="menuFlip"/>
     <addaction name="actionMove"/>
+    <addaction name="actionTranspose"/>
    </widget>
    <widget class="QMenu" name="menuArtistic_Effect">
     <property name="title">
@@ -529,6 +530,11 @@
   <action name="actionMove">
    <property name="text">
     <string>平移</string>
+   </property>
+  </action>
+  <action name="actionTranspose">
+   <property name="text">
+    <string>转置</string>
    </property>
   </action>
  </widget>
