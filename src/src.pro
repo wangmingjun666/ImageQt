@@ -27,6 +27,7 @@ HEADERS += dialog/dialog_exp_transform.h \
     utils/medianfilter.h    \
     utils/tools.h   \
     utils/qcustomplot.h   \
+    dialog/dialog_move_transform.h
 
 
 
@@ -44,7 +45,8 @@ SOURCES += dialog/dialog_exp_transform.cpp \
     utils/medianfilter.cpp  \
     utils/qcustomplot.cpp   \
     utils/tools.cpp \
-    main.cpp
+    main.cpp \
+    dialog/dialog_move_transform.cpp
 
 FORMS    += mainwindow/mainwindow.ui \
     dialog/gaussianblurdialog.ui \
@@ -53,7 +55,8 @@ FORMS    += mainwindow/mainwindow.ui \
     dialog/dialog_power_grey.ui \
     dialog/dialog_exp_transform.ui \
     dialog/dialog_two_threshold_transform.ui \
-    dialog/dialog_stretch_transform.ui
+    dialog/dialog_stretch_transform.ui \
+    dialog/dialog_move_transform.ui
 
 RESOURCES += \
     res/default.qrc

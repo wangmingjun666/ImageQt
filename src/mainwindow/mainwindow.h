@@ -58,6 +58,7 @@ private slots:
     void receiveExpGreyParamter(double, double, double);
     void receiveTwoThresholdParamter(int, int, int);
     void receiveStretchParamter(int, int, double, double, double, double, double);
+    void receiveTranslationTransformation(int moveX, int moveY);
 
     // On action triggered
     void on_actionOpen_triggered();
@@ -138,6 +139,8 @@ private slots:
     void on_actionGoback_triggered();
 
     void on_actionGoForward_triggered();
+    void on_actionMove_triggered();
+
 private:
     QAction *finalEx;
 

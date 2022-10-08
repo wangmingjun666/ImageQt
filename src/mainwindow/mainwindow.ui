@@ -101,6 +101,7 @@
     <addaction name="zoomAction"/>
     <addaction name="actionRotate"/>
     <addaction name="menuFlip"/>
+    <addaction name="actionMove"/>
    </widget>
    <widget class="QMenu" name="menuArtistic_Effect">
     <property name="title">
@@ -523,6 +524,11 @@
    </property>
    <property name="text">
     <string>回看</string>
+   </property>
+  </action>
+  <action name="actionMove">
+   <property name="text">
+    <string>平移</string>
    </property>
   </action>
  </widget>

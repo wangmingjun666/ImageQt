@@ -30,6 +30,7 @@ QImage StretchTransform(const QImage &origin,
                         int x1, int x2,
                         double k1, double k2, double k3,
                         double b2, double b3);
+QImage TranslationTransform(const QImage &origin, int moveX, int moveY);
 QImage SimpleSmooth(const QImage &origin);
 QImage MeidaFilter(const QImage &origin, int radius);
 QImage LaplaceSharpen(const QImage &origin);

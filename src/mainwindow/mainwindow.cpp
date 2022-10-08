@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "dialog_move_transform.h"
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 
@@ -241,6 +242,16 @@ void MainWindow::receiveStretchParamter(int x1, int x2,
 {
     QPixmap rightImage = rightPixmapItem->pixmap();
     QImage newImage = Tools::StretchTransform(rightImage.toImage(), x1, x2, k1, k2, k3, b2, b3);
+    rightImage.convertFromImage(newImage);
+
+    updateRightImage(rightImage);
+}
+
+void MainWindow::receiveTranslationTransformation(int moveX, int moveY)
+{
+    qInfo() << "receiveTranslationTransformation pppppppppppppppppppp";
+    QPixmap rightImage = rightPixmapItem->pixmap();
+    QImage newImage = Tools::TranslationTransform(rightImage.toImage(), moveX, moveY);
     rightImage.convertFromImage(newImage);
 
     updateRightImage(rightImage);
@@ -982,4 +993,13 @@ void MainWindow::on_actionGoForward_triggered()
     QPixmap pix = oldStackPixmap.pop();
     rightPixmapItem->setPixmap(pix);
     rightScene->setSceneRect(QRectF(pix.rect()));
+}
+
+void MainWindow::on_actionMove_triggered()
+{
+    Dialog_move_transform dialog(this);
+    void sendData(int, int);
+    connect(&dialog, SIGNAL(sendData(int, int)), this,
+            SLOT(receiveTranslationTransformation(int, int)));
+    dialog.exec();
 }

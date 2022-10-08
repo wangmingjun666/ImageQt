@@ -420,9 +420,13 @@ QImage Tools::LaplaceSharpen(const QImage &origin)
     int width = origin.width();
     int height = origin.height();
     QImage newImage = QImage(width, height, QImage::Format_RGB888);
-    //    int window[3][3] = {{0, -1, 0}, {-1, 4, -1}, {0, -1, 0}};
+    int window[3][3] = {{0, -1, 0},
+                        {-1, 4, -1},
+                        {0, -1, 0}};
 
-    int window[3][3] = {{1, -1, 1}, {-1, 4, -1}, {-1, -1, -1}};
+    //    int window[3][3] = {{1, -1, 1},
+    //                        {-1, 4, -1},
+    //                        {-1, -1, -1}};
 
     for (int x = 1; x < width; x++) {
         for (int y = 1; y < height; y++) {
@@ -930,5 +934,29 @@ QImage Tools::HistogramEqualization(const QImage &origin)
         }
     }
 
+    return newImg;
+}
+
+/*****************************************************************************
+ *                                平移变换
+ * **************************************************************************/
+QImage Tools::TranslationTransform(const QImage &origin, int moveX, int moveY)
+{
+    int width = origin.width();
+    int height = origin.height();
+    QImage newImg = QImage(width, height, QImage::Format_RGB888);
+
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            int oldX, oldY;
+            oldX = x - moveX;
+            oldY = y - moveY;
+            QColor color = Qt::GlobalColor::white;
+            if (oldX >= 0 && oldY >= 0 && oldY < height && oldX < width) {
+                color = origin.pixel(oldX, oldY);
+            }
+            newImg.setPixel(x, y, qRgb(color.red(), color.green(), color.blue()));
+        }
+    }
     return newImg;
 }
