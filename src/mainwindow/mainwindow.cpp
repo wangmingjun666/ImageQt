@@ -1012,3 +1012,19 @@ void MainWindow::on_actionTranspose_triggered()
 
     updateRightImage(rightImage);
 }
+
+void MainWindow::on_actionZoomAdjacencyValue_triggered()
+{
+    bool ok;
+    int factor = QInputDialog::getInt(this, tr("Zoom"), "Input a value for zoom ratio(%)", 100, 10, 1000, 10, &ok);
+    if (ok) {
+        if (factor != 100) {
+            QPixmap rightImage = rightPixmapItem->pixmap();
+            QImage newPixmap = Tools::ZoomAdjacencyValue(rightImage.toImage(), factor);
+            rightImage.convertFromImage(newPixmap);
+            updateRightImage(rightImage);
+        } else {
+            return;
+        }
+    }
+}

@@ -103,6 +103,7 @@
     <addaction name="menuFlip"/>
     <addaction name="actionMove"/>
     <addaction name="actionTranspose"/>
+    <addaction name="actionZoomAdjacencyValue"/>
    </widget>
    <widget class="QMenu" name="menuArtistic_Effect">
     <property name="title">
@@ -535,6 +536,11 @@
   <action name="actionTranspose">
    <property name="text">
     <string>转置</string>
+   </property>
+  </action>
+  <action name="actionZoomAdjacencyValue">
+   <property name="text">
+    <string>邻近值缩放</string>
    </property>
   </action>
  </widget>

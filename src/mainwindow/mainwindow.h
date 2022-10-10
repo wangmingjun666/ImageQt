@@ -143,6 +143,8 @@ private slots:
 
     void on_actionTranspose_triggered();
 
+    void on_actionZoomAdjacencyValue_triggered();
+
 private:
     QAction *finalEx;
 

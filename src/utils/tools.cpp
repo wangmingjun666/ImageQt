@@ -1061,3 +1061,31 @@ QImage Tools::Transpose(const QImage &origin)
     }
     return newImg;
 }
+
+/*****************************************************************************
+ *                                缩放（邻近值法）
+ * **************************************************************************/
+QImage Tools::ZoomAdjacencyValue(const QImage &origin, const int percent)
+{
+    if (percent == 100) {
+        return origin;
+    }
+    int oldWidth = origin.width();
+    int oldHeight = origin.height();
+    int width = oldWidth * percent / 100;
+    int height = oldHeight * percent / 100;
+    QImage newImg = QImage(height, width, QImage::Format_RGB888);
+
+    for (int x = 0; x < height; x++) {
+        for (int y = 0; y < width; y++) {
+            double DoldX = x * 100 / percent + 0.5;
+            double DoldY = y * 100 / percent + 0.5;
+            int oldX = qBound(0, static_cast<int>(DoldX), oldWidth - 1);
+            int oldY = qBound(0, static_cast<int>(DoldY), oldHeight - 1);
+            QColor color = origin.pixel(oldX, oldY);
+            newImg.setPixel(x, y, qRgb(color.red(), color.green(), color.blue()));
+        }
+    }
+    newImg.save("Zoom.png");
+    return newImg;
+}
