@@ -1074,10 +1074,10 @@ QImage Tools::ZoomAdjacencyValue(const QImage &origin, const int percent)
     int oldHeight = origin.height();
     int width = oldWidth * percent / 100;
     int height = oldHeight * percent / 100;
-    QImage newImg = QImage(height, width, QImage::Format_RGB888);
+    QImage newImg = QImage(width, height, QImage::Format_RGB888);
 
-    for (int x = 0; x < height; x++) {
-        for (int y = 0; y < width; y++) {
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
             double DoldX = x * 100 / percent + 0.5;
             double DoldY = y * 100 / percent + 0.5;
             int oldX = qBound(0, static_cast<int>(DoldX), oldWidth - 1);
@@ -1086,6 +1086,41 @@ QImage Tools::ZoomAdjacencyValue(const QImage &origin, const int percent)
             newImg.setPixel(x, y, qRgb(color.red(), color.green(), color.blue()));
         }
     }
-    newImg.save("Zoom.png");
+    return newImg;
+}
+
+/*****************************************************************************
+ *                                缩放（双线性）
+ * **************************************************************************/
+QImage Tools::ZoomBilinear(const QImage &origin, const int percent)
+{
+    if (percent == 100) {
+        return origin;
+    }
+    int oldWidth = origin.width();
+    int oldHeight = origin.height();
+    int width = oldWidth * percent / 100;
+    int height = oldHeight * percent / 100;
+    QImage newImg = QImage(width, height, QImage::Format_RGB888);
+
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            double DoldX = x * 100 / percent;
+            double DoldY = y * 100 / percent;
+            int x1, x2, y1, y2;
+            x1 = qFloor(DoldX);
+            y1 = qFloor(DoldY);
+            x2 = qBound(0, x1 + 1, oldWidth - 1);
+            y2 = qBound(0, y1 + 1, oldHeight - 1);
+            QColor Q11 = origin.pixel(x1, y1);
+            QColor Q12 = origin.pixel(x1, y2);
+            QColor Q21 = origin.pixel(x2, y1);
+            QColor Q22 = origin.pixel(x2, y2);
+            QColor R1 = (x2 - DoldX) / (x2 - x1) * Q11.rgb() + (DoldX - x1) / (x2 - x1) * Q21.rgb();
+            QColor R2 = (x2 - DoldX) / (x2 - x1) * Q12.rgb() + (DoldX - x1) / (x2 - x1) * Q22.rgb();
+            QColor P = (y2 - DoldY) / (y2 - y1) * R1.rgb() + (DoldY - y1) / (y2 - y1) * R2.rgb();
+            newImg.setPixel(x, y, qRgb(P.red(), P.green(), P.blue()));
+        }
+    }
     return newImg;
 }

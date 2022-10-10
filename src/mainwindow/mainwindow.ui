@@ -104,6 +104,7 @@
     <addaction name="actionMove"/>
     <addaction name="actionTranspose"/>
     <addaction name="actionZoomAdjacencyValue"/>
+    <addaction name="actionBilinear"/>
    </widget>
    <widget class="QMenu" name="menuArtistic_Effect">
     <property name="title">
@@ -541,6 +542,11 @@
   <action name="actionZoomAdjacencyValue">
    <property name="text">
     <string>邻近值缩放</string>
+   </property>
+  </action>
+  <action name="actionBilinear">
+   <property name="text">
+    <string>双线性缩放</string>
    </property>
   </action>
  </widget>

@@ -145,6 +145,8 @@ private slots:
 
     void on_actionZoomAdjacencyValue_triggered();
 
+    void on_actionBilinear_triggered();
+
 private:
     QAction *finalEx;
 
