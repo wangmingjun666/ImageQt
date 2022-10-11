@@ -105,6 +105,7 @@
     <addaction name="actionTranspose"/>
     <addaction name="actionZoomAdjacencyValue"/>
     <addaction name="actionBilinear"/>
+    <addaction name="actionWaveEffect"/>
    </widget>
    <widget class="QMenu" name="menuArtistic_Effect">
     <property name="title">
@@ -547,6 +548,11 @@
   <action name="actionBilinear">
    <property name="text">
     <string>双线性缩放</string>
+   </property>
+  </action>
+  <action name="actionWaveEffect">
+   <property name="text">
+    <string>添加波纹</string>
    </property>
   </action>
  </widget>

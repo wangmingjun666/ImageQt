@@ -1124,3 +1124,30 @@ QImage Tools::ZoomBilinear(const QImage &origin, const int percent)
     }
     return newImg;
 }
+
+/*****************************************************************************
+ *                                波浪特效（邻近值法）
+ * **************************************************************************/
+QImage Tools::WaveEffect(const QImage &origin)
+{
+    int oldWidth = origin.width();
+    int oldHeight = origin.height();
+    int width = oldWidth;
+    int height = oldHeight;
+    QImage newImg = QImage(width, height, QImage::Format_RGB888);
+
+    for (int x = 0; x < width; x++) {
+        double deviation = 15 * qSin(x * 3.1415926 / 180 * 10);
+        for (int y = 0; y < height; y++) {
+            double DoldX = x;
+            double DoldY = y - deviation;
+
+            int oldX = qBound(0, static_cast<int>(DoldX), oldWidth - 1);
+            int oldY = qBound(0, static_cast<int>(DoldY), oldHeight - 1);
+            QColor color = origin.pixel(oldX, oldY);
+
+            newImg.setPixel(x, y, qRgb(color.red(), color.green(), color.blue()));
+        }
+    }
+    return newImg;
+}

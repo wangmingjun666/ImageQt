@@ -147,6 +147,8 @@ private slots:
 
     void on_actionBilinear_triggered();
 
+    void on_actionWaveEffect_triggered();
+
 private:
     QAction *finalEx;
 

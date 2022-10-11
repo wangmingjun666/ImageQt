@@ -1044,3 +1044,11 @@ void MainWindow::on_actionBilinear_triggered()
         }
     }
 }
+
+void MainWindow::on_actionWaveEffect_triggered()
+{
+    QPixmap rightImage = rightPixmapItem->pixmap();
+    QImage newPixmap = Tools::WaveEffect(rightImage.toImage());
+    rightImage.convertFromImage(newPixmap);
+    updateRightImage(rightImage);
+}

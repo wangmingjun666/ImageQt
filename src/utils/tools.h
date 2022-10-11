@@ -53,6 +53,7 @@ QImage HistogramEqualization(const QImage &origin);
 QImage Transpose(const QImage &origin);
 QImage ZoomAdjacencyValue(const QImage &origin, const int percent);
 QImage ZoomBilinear(const QImage &origin, const int percent);
+QImage WaveEffect(const QImage &origin);
 } // namespace Tools
 
 #endif // TOOLS_H
